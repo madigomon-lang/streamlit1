@@ -24,14 +24,20 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- CARGA DE DATOS ---
+# --- CARGA DE DATOS (AQUÍ ES DONDE SE INTRODUCE LA INFORMACIÓN) ---
 @st.cache_data
 def load_data():
+    """
+    Esta función es el punto de entrada de tus datos.
+    Si tienes un archivo real, se carga aquí. Si no, se generan datos de ejemplo.
+    """
     try:
-        # Intenta cargar el dataset local si existe
+        # OPCIÓN 1: Cargar datos desde un archivo real en GitHub
+        # Solo necesitas subir un archivo llamado 'reciclaje_chile.csv' a tu repositorio.
         df = pd.read_csv("reciclaje_chile.csv")
     except Exception:
-        # Generación de datos sintéticos de alta fidelidad para la demo
+        # OPCIÓN 2: Datos de ejemplo (Si no hay archivo, la app usa esto)
+        # Aquí puedes cambiar los nombres o cantidades para probar
         np.random.seed(42)
         rows = 500
         data = {
@@ -40,7 +46,7 @@ def load_data():
             'Peso_kg': np.random.uniform(10, 150, rows),
             'Pureza_Pct': np.random.uniform(65, 98, rows),
         }
-        # Crear relación lineal para validación: Peso -> Impacto Ambiental
+        # Esta línea crea la relación para que tu Modelo Lineal funcione bien
         data['Impacto_Ambiental'] = data['Peso_kg'] * 1.65 + np.random.normal(0, 5, rows)
         df = pd.DataFrame(data)
     return df
@@ -138,3 +144,10 @@ elif opcion == "🧪 Validación de Modelo":
 
 st.markdown("---")
 st.caption("© 2024 Dashboard Integrador | Desarrollado por **Maria Dilia**")
+
+
+
+
+
+
+
